@@ -1,193 +1,93 @@
-// app.js - VinBank DApp
+// app.js - VinBank DApp mới
 
-let provider;
-let signer;
-let contract;
-let userAddress;
+let provider, signer, vinBank, vinToken, userAddress;
 
 const CONTRACT_ADDRESS = "0xAFD8E0e13EF9d9F63b2af94264A34cFBd2F148Dd";
 const TOKEN_ADDRESS = "0x941F63807401efCE8afe3C9d88d368bAA287Fac4";
 
-const ABI = [
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "_vinToken",
-        "type": "address"
-      }
-    ],
-    "stateMutability": "nonpayable",
-    "type": "constructor"
-  },
-  {
-    "inputs": [],
-    "name": "borrow",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "totalUserDeposit",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "amount",
-        "type": "uint256"
-      }
-    ],
-    "name": "deposit",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "repay",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "withdraw",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "user",
-        "type": "address"
-      }
-    ],
-    "name": "getPosition",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "deposited",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "interestEarned",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "borrowed",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "interestDue",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "totalDue",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "vinToken",
-    "outputs": [
-      {
-        "internalType": "contract IVIN",
-        "name": "",
-        "type": "address"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  }
-]; // Paste VinBank ABI here
-const TOKEN_ABI = [{"inputs":[{"internalType":"string","name":"_name","type":"string"},{"internalType":"string","name":"_symbol","type":"string"},{"internalType":"uint8","name":"_decimals","type":"uint8"},{"internalType":"uint256","name":"_initialSupply","type":"uint256"}],"stateMutability":"nonpayable","type":"constructor"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"owner","type":"address"},{"indexed":true,"internalType":"address","name":"spender","type":"address"},{"indexed":false,"internalType":"uint256","name":"value","type":"uint256"}],"name":"Approval","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"from","type":"address"},{"indexed":true,"internalType":"address","name":"to","type":"address"},{"indexed":true,"internalType":"address","name":"issuer","type":"address"},{"indexed":false,"internalType":"uint256","name":"value","type":"uint256"}],"name":"Fee","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"internalType":"uint256","name":"fee","type":"uint256"}],"name":"FeeUpdated","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"previousOwner","type":"address"},{"indexed":true,"internalType":"address","name":"newOwner","type":"address"}],"name":"OwnershipTransferred","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"from","type":"address"},{"indexed":true,"internalType":"address","name":"to","type":"address"},{"indexed":false,"internalType":"uint256","name":"value","type":"uint256"}],"name":"Transfer","type":"event"},{"inputs":[],"name":"DOMAIN_SEPARATOR","outputs":[{"internalType":"bytes32","name":"","type":"bytes32"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"acceptOwnership","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"owner","type":"address"},{"internalType":"address","name":"spender","type":"address"}],"name":"allowance","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"spender","type":"address"},{"internalType":"uint256","name":"amount","type":"uint256"}],"name":"approve","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"owner","type":"address"}],"name":"balanceOf","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"amount","type":"uint256"}],"name":"burn","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"decimals","outputs":[{"internalType":"uint8","name":"","type":"uint8"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"value","type":"uint256"}],"name":"estimateFee","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"issuer","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"minFee","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"name","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"owner","type":"address"}],"name":"nonces","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"owner","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"owner","type":"address"},{"internalType":"address","name":"spender","type":"address"},{"internalType":"uint256","name":"value","type":"uint256"},{"internalType":"uint256","name":"deadline","type":"uint256"},{"internalType":"uint8","name":"v","type":"uint8"},{"internalType":"bytes32","name":"r","type":"bytes32"},{"internalType":"bytes32","name":"s","type":"bytes32"}],"name":"permit","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"fee","type":"uint256"}],"name":"setFee","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"bytes4","name":"interfaceId","type":"bytes4"}],"name":"supportsInterface","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"symbol","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"totalSupply","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"recipient","type":"address"},{"internalType":"uint256","name":"amount","type":"uint256"}],"name":"transfer","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"sender","type":"address"},{"internalType":"address","name":"recipient","type":"address"},{"internalType":"uint256","name":"amount","type":"uint256"}],"name":"transferFrom","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"newOwner","type":"address"}],"name":"transferOwnership","outputs":[],"stateMutability":"nonpayable","type":"function"}]; // Paste VIN Token ABI here
+const BANK_ABI = [
+  "function deposit(uint256 amount) external",
+  "function borrow() external",
+  "function repay() external",
+  "function withdraw() external",
+  "function getPosition(address user) view returns (uint256,uint256,uint256,uint256,uint256)"
+];
 
+const TOKEN_ABI = [
+  "function approve(address spender, uint256 amount) external returns (bool)",
+  "function allowance(address owner, address spender) external view returns (uint256)",
+  "function transferFrom(address from, address to, uint256 amount) external returns (bool)",
+  "function balanceOf(address owner) external view returns (uint256)"
+];
+
+document.getElementById("connectWallet").addEventListener("click", connectWallet);
 async function connectWallet() {
   if (window.ethereum) {
-    provider = new ethers.providers.Web3Provider(window.ethereum);
-    await provider.send("eth_requestAccounts", []);
-    signer = provider.getSigner();
+    provider = new ethers.BrowserProvider(window.ethereum);
+    signer = await provider.getSigner();
     userAddress = await signer.getAddress();
-    contract = new ethers.Contract(CONTRACT_ADDRESS, ABI, signer);
-    document.getElementById("wallet-address").innerText = userAddress;
-    loadSummary();
+    vinBank = new ethers.Contract(CONTRACT_ADDRESS, BANK_ABI, signer);
+    vinToken = new ethers.Contract(TOKEN_ADDRESS, TOKEN_ABI, signer);
+    document.getElementById("walletAddress").innerText = `🔗 Connected: ${userAddress}`;
+    await loadSummary();
   } else {
-    alert("Please install a Web3 wallet like MetaMask or Viction.");
+    alert("🦊 Please install MetaMask or Viction Extension.");
   }
 }
 
-async function approveAndCall(fn, amount) {
-  const token = new ethers.Contract(TOKEN_ADDRESS, TOKEN_ABI, signer);
-  const allowance = await token.allowance(userAddress, CONTRACT_ADDRESS);
-  if (allowance.lt(amount)) {
-    const tx = await token.approve(CONTRACT_ADDRESS, amount);
-    await tx.wait();
+async function depositVIN() {
+  const input = document.getElementById("depositAmount").value;
+  const amount = ethers.parseUnits(input, 18);
+  const allowance = await vinToken.allowance(userAddress, CONTRACT_ADDRESS);
+  if (allowance < amount) {
+    const tx1 = await vinToken.approve(CONTRACT_ADDRESS, amount);
+    await tx1.wait();
   }
-  await fn();
+  const tx2 = await vinBank.deposit(amount);
+  await tx2.wait();
+  alert("✅ Deposit successful!");
+  await loadSummary();
 }
 
-async function deposit() {
-  const amount = ethers.utils.parseEther(document.getElementById("deposit-amount").value);
-  await approveAndCall(async () => {
-    const tx = await contract.deposit(amount);
-    await tx.wait();
-    loadSummary();
-    alert("✅ Deposit successful");
-  }, amount);
-}
-
-async function borrow() {
-  const tx = await contract.borrow();
+async function borrowVIN() {
+  const tx = await vinBank.borrow();
   await tx.wait();
-  loadSummary();
-  alert("✅ Borrow successful");
+  alert("✅ Borrowed 70% of your deposit!");
+  await loadSummary();
+}
+async function repayLoan() {
+  const position = await vinBank.getPosition(userAddress);
+  const totalDue = position[4]; // tổng số VIN phải trả = gốc + lãi
+
+  const allowance = await vinToken.allowance(userAddress, CONTRACT_ADDRESS);
+  if (allowance < totalDue) {
+    const tx1 = await vinToken.approve(CONTRACT_ADDRESS, totalDue);
+    await tx1.wait();
+  }
+
+  const tx2 = await vinBank.repay();
+  await tx2.wait();
+  alert("✅ Loan repaid successfully!");
+  await loadSummary();
 }
 
-async function repay() {
-  const info = await contract.getPosition(userAddress);
-  const repayAmount = info[4];
-  await approveAndCall(async () => {
-    const tx = await contract.repay();
-    await tx.wait();
-    loadSummary();
-    alert("✅ Loan repaid");
-  }, repayAmount);
-}
-
-async function withdraw() {
-  const tx = await contract.withdraw();
+async function withdrawVIN() {
+  const tx = await vinBank.withdraw();
   await tx.wait();
-  loadSummary();
-  alert("✅ Withdrawal successful");
+  alert("✅ Withdrawal successful!");
+  await loadSummary();
 }
 
 async function loadSummary() {
-  const summary = await contract.getPosition(userAddress);
-  document.getElementById("summary").innerHTML = `
-    <b>Deposited:</b> ${ethers.utils.formatEther(summary[0])} VIN<br>
-    <b>Earned (Interest):</b> ${ethers.utils.formatEther(summary[1])} VIN<br>
-    <b>Borrowed:</b> ${ethers.utils.formatEther(summary[2])} VIN<br>
-    <b>Interest Due:</b> ${ethers.utils.formatEther(summary[3])} VIN<br>
-    <b>Total Repayment:</b> ${ethers.utils.formatEther(summary[4])} VIN
+  const s = await vinBank.getPosition(userAddress);
+  const format = ethers.formatUnits;
+  const summaryText = `
+📌 <b>Your Account Summary</b><br><br>
+🟢 <b>Deposited:</b> ${format(s[0], 18)} VIN<br>
+💰 <b>Interest Earned:</b> ${format(s[1], 18)} VIN<br>
+🔴 <b>Borrowed:</b> ${format(s[2], 18)} VIN<br>
+⚠️ <b>Interest Due:</b> ${format(s[3], 18)} VIN<br>
+📤 <b>Total to Repay:</b> ${format(s[4], 18)} VIN
   `;
+  document.getElementById("summaryBox").innerHTML = summaryText;
 }
