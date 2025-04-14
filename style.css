@@ -219,3 +219,10 @@ pre {
     padding-bottom: 40px;
   }
 }
+/* Ngăn chọn văn bản, ngăn kéo chuột */
+body {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
