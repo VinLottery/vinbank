@@ -74,3 +74,101 @@ input[type="text"]:focus, textarea:focus {
     display: none;                  /* Ẩn các phần không cần thiết trên giao diện mobile */
   }
 }
+
+/* VinBank - style.css */
+
+body {
+  background-color: #121212;
+  color: #E0E0E0;
+  font-family: 'Segoe UI', Tahoma, sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+  max-width: 900px;
+  margin: auto;
+  padding: 24px;
+}
+
+.card {
+  background-color: #1E1E1E;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  padding: 16px;
+  margin: 20px 0;
+}
+
+h1, h2, h3 {
+  color: #FFFFFF;
+  margin-top: 0;
+}
+
+label {
+  display: block;
+  margin-bottom: 6px;
+  font-weight: 500;
+}
+
+input[type="text"], input[type="number"], select, textarea {
+  background-color: #262626;
+  color: #E0E0E0;
+  border: 1px solid #444444;
+  border-radius: 4px;
+  padding: 10px;
+  width: 100%;
+  box-sizing: border-box;
+  margin-bottom: 16px;
+}
+
+input:focus, textarea:focus, select:focus {
+  border-color: #5865F2;
+  outline: none;
+}
+
+button {
+  background-color: #5865F2;
+  color: #FFFFFF;
+  border: none;
+  border-radius: 6px;
+  padding: 12px 20px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+button:hover {
+  background-color: #6C7FF2;
+  box-shadow: 0 0 8px rgba(88, 101, 242, 0.5);
+}
+
+button.secondary {
+  background-color: transparent;
+  color: #E0E0E0;
+  border: 1px solid #5865F2;
+}
+
+button.secondary:hover {
+  background-color: #2A2A2A;
+}
+
+.flex-row {
+  display: flex;
+  gap: 16px;
+}
+
+.flex-col {
+  flex-direction: column;
+}
+
+@media (max-width: 768px) {
+  .flex-row {
+    flex-direction: column;
+  }
+  .col {
+    width: 100%;
+  }
+  .hide-mobile {
+    display: none;
+  }
+}
