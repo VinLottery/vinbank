@@ -1,174 +1,87 @@
-/* Nền tối toàn trang và thiết lập font chữ */
+/* style.css - VinBank UI */
 body {
-  background-color: #121212;          /* Nền dark mode (xám đậm thay vì đen tuyệt đối) */
-  color: #E0E0E0;                     /* Màu chữ xám nhạt cho nội dung trên nền tối */
-  font-family: 'Segoe UI', Tahoma, sans-serif;  /* Font sans-serif hiện đại, dễ đọc */
-  margin: 0;
-  padding: 0;
-}
-
-/* Thẻ nội dung (card/container) */
-.card {
-  background-color: #1E1E1E;          /* Nền thẻ hơi sáng hơn nền trang để phân tách lớp */
-  border-radius: 8px;                 /* Bo góc nhẹ cho thẻ nội dung */
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);  /* Bóng đổ nhẹ tạo chiều sâu */
-  padding: 16px;
-  margin: 16px 0;
-}
-
-/* Nút chính (Primary button) */
-.button-primary {
-  background-color: #5865F2;         /* Màu nhấn thương hiệu (ví dụ: xanh lam/tím Vin) */
-  color: #FFFFFF;                    /* Chữ trắng nổi bật trên nền màu nhấn */
-  border: none;
-  border-radius: 6px;                /* Bo góc cho nút, đồng bộ với thẻ */
-  padding: 12px 20px;
-  font-size: 1rem;
-  cursor: pointer;
-  transition: background-color 0.3s;
-}
-.button-primary:hover {
-  background-color: #6C7FF2;         /* Đổi màu nhấn hơi sáng hơn khi hover */
-  box-shadow: 0 0 8px rgba(88,101,242,0.5); /* Hiệu ứng ánh sáng nhẹ khi hover */
-}
-
-/* Nút thứ cấp (Secondary button) */
-.button-secondary {
-  background-color: transparent;
-  color: #E0E0E0;
-  border: 1px solid #5865F2;         /* Viền dùng màu nhấn nhưng nền trong suốt */
-  border-radius: 6px;
-  padding: 10px 18px;
-  font-size: 1rem;
-  cursor: pointer;
-}
-.button-secondary:hover {
-  background-color: #2A2A2A;         /* Hover: đổi nền xám đậm để nổi bật hơn */
-}
-
-/* Định dạng ô nhập (input field) */
-input[type="text"], textarea {
-  background-color: #262626;         /* Nền ô nhập tối vừa phải */
-  color: #E0E0E0;
-  border: 1px solid #444444;         /* Viền xám trung tính */
-  border-radius: 4px;
-  padding: 8px;
-  width: 100%;
-}
-input[type="text"]:focus, textarea:focus {
-  border-color: #5865F2;             /* Viền đổi sang màu nhấn khi focus */
-  outline: none;                     /* Bỏ viền outline mặc định */
-}
-
-/* Responsive thiết kế: Stack nội dung trên mobile */
-@media (max-width: 768px) {
-  .row {
-    display: flex;
-    flex-direction: column;         /* Chuyển các hàng thành cột dọc trên màn hình nhỏ */
-  }
-  .col {
-    width: 100%;                    /* Mỗi cột chiếm toàn bộ chiều ngang trên mobile */
-    margin-bottom: 16px;
-  }
-  .hide-mobile {
-    display: none;                  /* Ẩn các phần không cần thiết trên giao diện mobile */
-  }
-}
-
-/* VinBank - style.css */
-
-body {
-  background-color: #121212;
-  color: #E0E0E0;
-  font-family: 'Segoe UI', Tahoma, sans-serif;
+  font-family: Arial, sans-serif;
+  background: #f4f4f4;
+  color: #333;
   margin: 0;
   padding: 0;
 }
 
 .container {
-  max-width: 900px;
-  margin: auto;
-  padding: 24px;
+  max-width: 600px;
+  margin: 40px auto;
+  padding: 20px;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.05);
 }
 
-.card {
-  background-color: #1E1E1E;
-  border-radius: 8px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  padding: 16px;
-  margin: 20px 0;
+h1 {
+  text-align: center;
+  font-size: 2em;
+  margin-bottom: 10px;
 }
 
-h1, h2, h3 {
-  color: #FFFFFF;
-  margin-top: 0;
-}
-
-label {
-  display: block;
-  margin-bottom: 6px;
-  font-weight: 500;
-}
-
-input[type="text"], input[type="number"], select, textarea {
-  background-color: #262626;
-  color: #E0E0E0;
-  border: 1px solid #444444;
-  border-radius: 4px;
-  padding: 10px;
-  width: 100%;
-  box-sizing: border-box;
-  margin-bottom: 16px;
-}
-
-input:focus, textarea:focus, select:focus {
-  border-color: #5865F2;
-  outline: none;
+.tagline {
+  text-align: center;
+  font-style: italic;
+  color: #777;
+  margin-bottom: 30px;
 }
 
 button {
-  background-color: #5865F2;
-  color: #FFFFFF;
+  background: #0077ff;
+  color: white;
   border: none;
-  border-radius: 6px;
-  padding: 12px 20px;
-  font-size: 1rem;
+  padding: 10px 18px;
+  border-radius: 8px;
   cursor: pointer;
-  transition: background-color 0.3s;
+  font-weight: bold;
+  transition: background 0.3s ease;
 }
 
 button:hover {
-  background-color: #6C7FF2;
-  box-shadow: 0 0 8px rgba(88, 101, 242, 0.5);
+  background: #005fcc;
 }
 
-button.secondary {
-  background-color: transparent;
-  color: #E0E0E0;
-  border: 1px solid #5865F2;
+input[type="number"] {
+  width: 100%;
+  padding: 10px;
+  margin-top: 8px;
+  margin-bottom: 12px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 1em;
 }
 
-button.secondary:hover {
-  background-color: #2A2A2A;
+.card {
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  padding: 15px 20px;
+  margin-bottom: 25px;
+  background-color: #fafafa;
 }
 
-.flex-row {
-  display: flex;
-  gap: 16px;
+.card h2 {
+  margin-top: 0;
+  font-size: 1.3em;
+  margin-bottom: 12px;
 }
 
-.flex-col {
-  flex-direction: column;
+pre {
+  background: #eee;
+  padding: 10px;
+  border-radius: 6px;
+  font-family: monospace;
+  font-size: 0.9em;
+  overflow-x: auto;
 }
 
-@media (max-width: 768px) {
-  .flex-row {
-    flex-direction: column;
-  }
-  .col {
-    width: 100%;
-  }
-  .hide-mobile {
-    display: none;
-  }
+.info {
+  text-align: center;
+  margin-top: 10px;
+  margin-bottom: 20px;
+  font-size: 0.95em;
+  color: #555;
+  word-break: break-all;
 }
