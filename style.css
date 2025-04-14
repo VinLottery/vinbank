@@ -1,0 +1,76 @@
+/* Nền tối toàn trang và thiết lập font chữ */
+body {
+  background-color: #121212;          /* Nền dark mode (xám đậm thay vì đen tuyệt đối) */
+  color: #E0E0E0;                     /* Màu chữ xám nhạt cho nội dung trên nền tối */
+  font-family: 'Segoe UI', Tahoma, sans-serif;  /* Font sans-serif hiện đại, dễ đọc */
+  margin: 0;
+  padding: 0;
+}
+
+/* Thẻ nội dung (card/container) */
+.card {
+  background-color: #1E1E1E;          /* Nền thẻ hơi sáng hơn nền trang để phân tách lớp */
+  border-radius: 8px;                 /* Bo góc nhẹ cho thẻ nội dung */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);  /* Bóng đổ nhẹ tạo chiều sâu */
+  padding: 16px;
+  margin: 16px 0;
+}
+
+/* Nút chính (Primary button) */
+.button-primary {
+  background-color: #5865F2;         /* Màu nhấn thương hiệu (ví dụ: xanh lam/tím Vin) */
+  color: #FFFFFF;                    /* Chữ trắng nổi bật trên nền màu nhấn */
+  border: none;
+  border-radius: 6px;                /* Bo góc cho nút, đồng bộ với thẻ */
+  padding: 12px 20px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+.button-primary:hover {
+  background-color: #6C7FF2;         /* Đổi màu nhấn hơi sáng hơn khi hover */
+  box-shadow: 0 0 8px rgba(88,101,242,0.5); /* Hiệu ứng ánh sáng nhẹ khi hover */
+}
+
+/* Nút thứ cấp (Secondary button) */
+.button-secondary {
+  background-color: transparent;
+  color: #E0E0E0;
+  border: 1px solid #5865F2;         /* Viền dùng màu nhấn nhưng nền trong suốt */
+  border-radius: 6px;
+  padding: 10px 18px;
+  font-size: 1rem;
+  cursor: pointer;
+}
+.button-secondary:hover {
+  background-color: #2A2A2A;         /* Hover: đổi nền xám đậm để nổi bật hơn */
+}
+
+/* Định dạng ô nhập (input field) */
+input[type="text"], textarea {
+  background-color: #262626;         /* Nền ô nhập tối vừa phải */
+  color: #E0E0E0;
+  border: 1px solid #444444;         /* Viền xám trung tính */
+  border-radius: 4px;
+  padding: 8px;
+  width: 100%;
+}
+input[type="text"]:focus, textarea:focus {
+  border-color: #5865F2;             /* Viền đổi sang màu nhấn khi focus */
+  outline: none;                     /* Bỏ viền outline mặc định */
+}
+
+/* Responsive thiết kế: Stack nội dung trên mobile */
+@media (max-width: 768px) {
+  .row {
+    display: flex;
+    flex-direction: column;         /* Chuyển các hàng thành cột dọc trên màn hình nhỏ */
+  }
+  .col {
+    width: 100%;                    /* Mỗi cột chiếm toàn bộ chiều ngang trên mobile */
+    margin-bottom: 16px;
+  }
+  .hide-mobile {
+    display: none;                  /* Ẩn các phần không cần thiết trên giao diện mobile */
+  }
+}
