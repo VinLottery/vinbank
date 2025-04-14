@@ -1,4 +1,4 @@
-// app.js - VinBank DApp mới
+// app.js - VinBank DApp mới đồng bộ
 
 let provider, signer, vinBank, vinToken, userAddress;
 
@@ -28,7 +28,12 @@ async function connectWallet() {
     userAddress = await signer.getAddress();
     vinBank = new ethers.Contract(CONTRACT_ADDRESS, BANK_ABI, signer);
     vinToken = new ethers.Contract(TOKEN_ADDRESS, TOKEN_ABI, signer);
+
+    // Hiển thị ví và số dư VIN
     document.getElementById("walletAddress").innerText = `🔗 Connected: ${userAddress}`;
+    const balance = await vinToken.balanceOf(userAddress);
+    document.getElementById("vinBalance").innerText = ethers.formatUnits(balance, 18);
+
     await loadSummary();
   } else {
     alert("🦊 Please install MetaMask or Viction Extension.");
@@ -47,6 +52,7 @@ async function depositVIN() {
   await tx2.wait();
   alert("✅ Deposit successful!");
   await loadSummary();
+  await updateVinBalance();
 }
 
 async function borrowVIN() {
@@ -54,10 +60,11 @@ async function borrowVIN() {
   await tx.wait();
   alert("✅ Borrowed 70% of your deposit!");
   await loadSummary();
+  await updateVinBalance();
 }
 async function repayLoan() {
   const position = await vinBank.getPosition(userAddress);
-  const totalDue = position[4]; // tổng số VIN phải trả = gốc + lãi
+  const totalDue = position[4];
 
   const allowance = await vinToken.allowance(userAddress, CONTRACT_ADDRESS);
   if (allowance < totalDue) {
@@ -69,6 +76,7 @@ async function repayLoan() {
   await tx2.wait();
   alert("✅ Loan repaid successfully!");
   await loadSummary();
+  await updateVinBalance();
 }
 
 async function withdrawVIN() {
@@ -76,6 +84,7 @@ async function withdrawVIN() {
   await tx.wait();
   alert("✅ Withdrawal successful!");
   await loadSummary();
+  await updateVinBalance();
 }
 
 async function loadSummary() {
@@ -90,4 +99,9 @@ async function loadSummary() {
 📤 <b>Total to Repay:</b> ${format(s[4], 18)} VIN
   `;
   document.getElementById("summaryBox").innerHTML = summaryText;
+}
+
+async function updateVinBalance() {
+  const balance = await vinToken.balanceOf(userAddress);
+  document.getElementById("vinBalance").innerText = ethers.formatUnits(balance, 18);
 }
