@@ -167,3 +167,55 @@ pre {
     margin-top: 10px;
   }
 }
+/* === Responsive tối ưu cho tablet và mobile === */
+@media screen and (max-width: 768px) {
+  .container {
+    padding: 15px;
+  }
+
+  .card {
+    padding: 16px;
+  }
+
+  .card h2 {
+    font-size: 1.2em;
+  }
+
+  button {
+    width: 100%;
+    margin-top: 8px;
+  }
+
+  input[type="number"] {
+    font-size: 1em;
+  }
+
+  pre {
+    font-size: 0.9em;
+  }
+}
+
+/* === Responsive tối đa cho điện thoại nhỏ hơn 480px === */
+@media screen and (max-width: 480px) {
+  .logo {
+    width: 40px;
+    height: 40px;
+  }
+
+  .card {
+    padding: 14px;
+  }
+
+  .header {
+    padding: 15px;
+  }
+
+  .vin-info {
+    font-size: 0.85em;
+  }
+
+  .footer {
+    font-size: 0.8em;
+    padding-bottom: 40px;
+  }
+}
