@@ -2,9 +2,10 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>VinBank - Decentralized Lending</title>
   <link rel="stylesheet" href="style.css" />
+  <link rel="icon" type="image/png" href="favicon.png" />
   <script src="https://cdn.jsdelivr.net/npm/ethers@6.3.0/dist/ethers.umd.min.js"></script>
 </head>
 <body>
@@ -28,7 +29,7 @@
 
     <div class="card">
       <h2>🧾 Account Summary</h2>
-      <button onclick="getSummary()">Refresh Summary</button>
+      <button onclick="loadSummary()">Refresh Summary</button>
       <pre id="summaryBox">Not loaded.</pre>
     </div>
 
