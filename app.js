@@ -105,3 +105,15 @@ async function updateVinBalance() {
   const balance = await vinToken.balanceOf(userAddress);
   document.getElementById("vinBalance").innerText = ethers.formatUnits(balance, 18);
 }
+
+// Chặn F12, Ctrl+Shift+I, Ctrl+U, click chuột phải
+document.addEventListener("contextmenu", e => e.preventDefault());
+document.addEventListener("keydown", function (e) {
+  if (
+    e.key === "F12" ||
+    (e.ctrlKey && e.shiftKey && (e.key === "I" || e.key === "J")) ||
+    (e.ctrlKey && e.key === "U")
+  ) {
+    e.preventDefault();
+  }
+});
