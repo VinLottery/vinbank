@@ -252,3 +252,40 @@ body {
 .card:nth-of-type(4) a:hover {
   text-decoration: underline;
 }
+
+/* === VinDice promo card (hài hòa với .card hiện có) === */
+.vindice-card {
+  border: 2px solid #7f56d9;            /* tím nhẹ làm điểm nhấn */
+  background: #f7f4ff;                  /* tím pastel dịu */
+  transition: transform .3s ease, box-shadow .3s ease;
+}
+
+.vindice-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 16px rgba(127, 86, 217, 0.15);
+}
+
+.vindice-card h2 {
+  color: #7f56d9;
+  margin-top: 0;
+}
+
+.vindice-card a {
+  color: #7f56d9;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.vindice-card a:hover {
+  text-decoration: underline;
+}
+
+.vindice-card .mini-list {
+  margin: 8px 0 0 0;
+  padding-left: 18px; /* đồng bộ ul mặc định */
+}
+
+/* Mobile: tận dụng quy tắc responsive sẵn có của .card và button */
+@media screen and (max-width: 600px) {
+  .vindice-card { padding: 18px; }
+}
